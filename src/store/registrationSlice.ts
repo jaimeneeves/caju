@@ -48,6 +48,22 @@ export const updateRegistrationStatus = createAsyncThunk(
   }
 );
 
+export const deleteRegistration = createAsyncThunk(
+  'registrations/deleteRegistration',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      await axios.delete(`/registrations/${id}`);
+      return id;
+    } catch (error) {
+      if (isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue('An unknown error occurred');
+      }
+    }
+  }
+);
+
 const registrationSlice = createSlice({
   name: 'registrations',
   initialState,
@@ -68,6 +84,13 @@ const registrationSlice = createSlice({
         state.registrations = state.registrations.map(registration =>
           registration.id === action.payload.id ? action.payload : registration
         );
+      })
+      .addCase(deleteRegistration.fulfilled, (state, action: PayloadAction<string>) => {
+        state.registrations = state.registrations.filter(registration => registration.id !== action.payload);
+      })
+      .addCase(deleteRegistration.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
       });
   },
 });
