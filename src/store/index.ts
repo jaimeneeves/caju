@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import registrationReducer from './registrationSlice';
+import searchReducer from './searchSlice';
 
 const store = configureStore({
   reducer: {
     registrations: registrationReducer,
+    search: searchReducer,
   },
 });
 

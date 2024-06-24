@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '~/store';
 import { fetchRegistrations } from '~/store/registrationSlice';
@@ -17,19 +17,15 @@ type Registration = {
 }
 
 const DashboardPage = () => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
   const dispatch = useDispatch<AppDispatch>();
+
+  const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
   const registrations = useSelector((state: RootState) => state.registrations.registrations);
   const status = useSelector((state: RootState) => state.registrations.status);
-
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-  };
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const filteredRegistrations = registrations.filter((registration: Registration) =>
-    registration.cpf.includes(searchTerm)
+    registration.cpf.includes(debouncedSearchTerm)
   );
 
   useEffect(() => {
@@ -50,7 +46,7 @@ const DashboardPage = () => {
 
   return (
     <S.Container>
-      <SearchBar handleSearch={handleSearch} />
+      <SearchBar />
       <Collumns registrations={filteredRegistrations} />
     </S.Container>
   );
