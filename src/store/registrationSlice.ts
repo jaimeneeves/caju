@@ -34,9 +34,9 @@ export const fetchRegistrations = createAsyncThunk(
 
 export const updateRegistrationStatus = createAsyncThunk(
   'registrations/updateRegistrationStatus',
-  async ({ id, status }: { id: string; status: string }, { rejectWithValue }) => {
+  async (data: Registration, { rejectWithValue }) => {
     try {
-      const response = await axios.patch(`/registrations/${id}`, { status });
+      const response = await axios.put(`/registrations/${data.id}`, data);
       return response.data as Registration;
     } catch (error) {
       if (isAxiosError(error) && error.response) {

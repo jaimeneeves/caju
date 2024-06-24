@@ -18,8 +18,17 @@ const RegistrationCard = (props: Props) => {
   const dispatch: AppDispatch = useDispatch();
 
   const handleReprove = () => {
-    dispatch(updateRegistrationStatus({ id: props.data.id, status: 'REPROVED' }));
+    dispatch(updateRegistrationStatus({ ...props.data, status: 'REPROVED' }));
   };
+
+  const handleApprove = () => {
+    dispatch(updateRegistrationStatus({ ...props.data, status: 'APPROVED' }));
+  };
+
+  const handleReview = () => {
+    dispatch(updateRegistrationStatus({ ...props.data, status: 'REVIEW' }));
+  };
+
 
   return (
     <S.Card>
@@ -37,8 +46,8 @@ const RegistrationCard = (props: Props) => {
       </S.IconAndText>
       <S.Actions>
         <ButtonSmall bgcolor="rgb(255, 145, 154)" onClick={handleReprove}>Reprovar</ButtonSmall>
-        <ButtonSmall bgcolor="rgb(155, 229, 155)">Aprovar</ButtonSmall>
-        <ButtonSmall bgcolor="#ff8858">Revisar novamente</ButtonSmall>
+        <ButtonSmall bgcolor="rgb(155, 229, 155)" onClick={handleApprove}>Aprovar</ButtonSmall>
+        <ButtonSmall bgcolor="#ff8858" onClick={handleReview}>Revisar novamente</ButtonSmall>
 
         <HiOutlineTrash />
       </S.Actions>
