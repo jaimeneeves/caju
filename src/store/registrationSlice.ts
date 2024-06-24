@@ -34,10 +34,26 @@ export const fetchRegistrations = createAsyncThunk(
 
 export const updateRegistrationStatus = createAsyncThunk(
   'registrations/updateRegistrationStatus',
-  async ({ id, status }: { id: string; status: string }, { rejectWithValue }) => {
+  async (data: Registration, { rejectWithValue }) => {
     try {
-      const response = await axios.patch(`/registrations/${id}`, { status });
+      const response = await axios.put(`/registrations/${data.id}`, data);
       return response.data as Registration;
+    } catch (error) {
+      if (isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue('An unknown error occurred');
+      }
+    }
+  }
+);
+
+export const deleteRegistration = createAsyncThunk(
+  'registrations/deleteRegistration',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      await axios.delete(`/registrations/${id}`);
+      return id;
     } catch (error) {
       if (isAxiosError(error) && error.response) {
         return rejectWithValue(error.response.data);
@@ -64,10 +80,28 @@ const registrationSlice = createSlice({
       .addCase(fetchRegistrations.rejected, (state) => {
         state.status = 'failed';
       })
+      .addCase(updateRegistrationStatus.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(updateRegistrationStatus.fulfilled, (state, action: PayloadAction<Registration>) => {
-        state.registrations = state.registrations.map(registration =>
+        state.status = 'idle';
+        state.registrations = state.registrations.map((registration) =>
           registration.id === action.payload.id ? action.payload : registration
         );
+      })
+      .addCase(updateRegistrationStatus.rejected, (state) => {
+        state.status = 'failed';
+      })
+      .addCase(deleteRegistration.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteRegistration.fulfilled, (state, action: PayloadAction<string>) => {
+        state.status = 'idle';
+        state.registrations = state.registrations.filter(registration => registration.id !== action.payload);
+      })
+      .addCase(deleteRegistration.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
       });
   },
 });
