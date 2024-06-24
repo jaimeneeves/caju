@@ -7,7 +7,7 @@ import {
   HiOutlineCalendar,
   HiOutlineTrash,
 } from "react-icons/hi";
-import { updateRegistrationStatus } from '~/store/registrationSlice'
+import { updateRegistrationStatus, deleteRegistration } from '~/store/registrationSlice'
 import { AppDispatch } from '~/store';
 
 type Props = {
@@ -29,6 +29,9 @@ const RegistrationCard = (props: Props) => {
     dispatch(updateRegistrationStatus({ ...props.data, status: 'REVIEW' }));
   };
 
+  const handleDelete = () => {
+    dispatch(deleteRegistration(props.data.id));
+  };
 
   return (
     <S.Card>
@@ -49,7 +52,7 @@ const RegistrationCard = (props: Props) => {
         <ButtonSmall bgcolor="rgb(155, 229, 155)" onClick={handleApprove}>Aprovar</ButtonSmall>
         <ButtonSmall bgcolor="#ff8858" onClick={handleReview}>Revisar novamente</ButtonSmall>
 
-        <HiOutlineTrash />
+        <HiOutlineTrash onClick={handleDelete} />
       </S.Actions>
     </S.Card>
   );
