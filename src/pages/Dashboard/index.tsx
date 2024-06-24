@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import axios from '~/api/axios-config';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '~/store';
+import { fetchRegistrations } from '~/store/registrationSlice';
 import Collumns from "./components/Columns";
 import * as S from "./styles";
 import { SearchBar } from "./components/Searchbar";
@@ -15,39 +17,36 @@ type Registration = {
 }
 
 const DashboardPage = () => {
-  const [registrations, setRegistrations] = useState<Registration[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const fetchRegistrations = async (cpf?: string) => {
-    try {
-      const response = await axios.get('/registrations', {
-        params: cpf ? { cpf } : {} });
-      setRegistrations(response.data);
-    } catch (error) {
-      console.error("Error fetching registrations:", error);
-    }
-  };
+  const dispatch = useDispatch<AppDispatch>();
+  const registrations = useSelector((state: RootState) => state.registrations.registrations);
+  const status = useSelector((state: RootState) => state.registrations.status);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
   };
 
-  const filteredRegistrations = registrations.filter(registration =>
+  const filteredRegistrations = registrations.filter((registration: Registration) =>
     registration.cpf.includes(searchTerm)
   );
 
   useEffect(() => {
-    fetchRegistrations();
-  }, []);
+    dispatch(fetchRegistrations());
+  }, [dispatch]);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      fetchRegistrations(debouncedSearchTerm);
+      dispatch(fetchRegistrations(debouncedSearchTerm));
     } else {
-      fetchRegistrations();
+      dispatch(fetchRegistrations());
     }
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, dispatch]);
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
 
   return (
     <S.Container>
