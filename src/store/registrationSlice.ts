@@ -80,12 +80,23 @@ const registrationSlice = createSlice({
       .addCase(fetchRegistrations.rejected, (state) => {
         state.status = 'failed';
       })
+      .addCase(updateRegistrationStatus.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(updateRegistrationStatus.fulfilled, (state, action: PayloadAction<Registration>) => {
-        state.registrations = state.registrations.map(registration =>
+        state.status = 'idle';
+        state.registrations = state.registrations.map((registration) =>
           registration.id === action.payload.id ? action.payload : registration
         );
       })
+      .addCase(updateRegistrationStatus.rejected, (state) => {
+        state.status = 'failed';
+      })
+      .addCase(deleteRegistration.pending, (state) => {
+        state.status = 'loading';
+      })
       .addCase(deleteRegistration.fulfilled, (state, action: PayloadAction<string>) => {
+        state.status = 'idle';
         state.registrations = state.registrations.filter(registration => registration.id !== action.payload);
       })
       .addCase(deleteRegistration.rejected, (state, action) => {

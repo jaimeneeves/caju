@@ -6,6 +6,7 @@ import Collumns from "./components/Columns";
 import * as S from "./styles";
 import { SearchBar } from "./components/Searchbar";
 import { useDebounce } from '~/hooks/useDebounce';
+import LoadingOverlay from '~/components/LoadingOverlay';
 
 type Registration = {
   id: string;
@@ -40,12 +41,9 @@ const DashboardPage = () => {
     }
   }, [debouncedSearchTerm, dispatch]);
 
-  if (status === 'loading') {
-    return <div>Loading...</div>;
-  }
-
   return (
     <S.Container>
+      {status === 'loading' && <LoadingOverlay />}
       <SearchBar />
       <Collumns registrations={filteredRegistrations} />
     </S.Container>
