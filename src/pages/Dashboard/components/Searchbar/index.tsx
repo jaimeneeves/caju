@@ -10,10 +10,12 @@ import * as S from "./styles";
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchTerm } from '~/store/searchSlice';
 import { RootState } from '~/store';
+import { fetchRegistrations, AppDispatch } from '~/store/registrationSlice';
+import { validateCPF } from '~/helpers';
 
 export const SearchBar = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
   const [inputValue, setInputValue] = useState<string>(searchTerm);
 
@@ -21,10 +23,26 @@ export const SearchBar = () => {
     history.push(routes.newUser);
   };
 
+  const removeMask = (value: string) => {
+    return value.replace(/\D/g, '');
+  };
+
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setInputValue(value);
-    dispatch(setSearchTerm(value));
+    const maskedValue = event.target.value;
+    setInputValue(maskedValue);
+
+    const unmaskedValue = removeMask(maskedValue);
+    console.log('Input Changed:', unmaskedValue); // Log de depuração
+
+    if (validateCPF(unmaskedValue)) {
+      dispatch(setSearchTerm(unmaskedValue));
+    } else {
+      console.log('CPF inválido'); // Log de depuração      
+    }
+  };
+
+  const handleRefreshClick = () => {
+    dispatch(fetchRegistrations());
   };
 
   useEffect(() => {
@@ -33,9 +51,14 @@ export const SearchBar = () => {
   
   return (
     <S.Container>
-      <TextField  placeholder="Digite um CPF válido" value={inputValue} onChange={handleInputChange} />
+      <TextField
+        mask="000.000.000-00"
+        placeholder="Digite um CPF válido"
+        value={inputValue}
+        onChange={handleInputChange}
+      />
       <S.Actions>
-        <IconButton aria-label="refetch">
+        <IconButton aria-label="refetch" onClick={handleRefreshClick}>
           <HiRefresh />
         </IconButton>
         <Button onClick={() => goToNewAdmissionPage()}>Nova Admissão</Button>
