@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from 'react-toastify'
 import { ButtonSmall } from "~/components/Buttons";
 import Modal from "~/components/Modal";
 import { useDispatch } from 'react-redux';
@@ -23,18 +24,78 @@ const RegistrationCard = (props: Props) => {
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   const handleConfirmReprove = () => {
-    dispatch(updateRegistrationStatus({ ...props.data, status: 'REPROVED' }));
-    setIsReproveModalOpen(false);
+    dispatch(updateRegistrationStatus({ ...props.data, status: 'REPROVED' })).then(() => {
+      setIsReproveModalOpen(false);
+      toast.success('Registro reprovado com sucesso', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }).catch(() => {
+      toast.error('Erro ao reprovar registro', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    });
   };
 
   const handleConfirmApprove = () => {
-    dispatch(updateRegistrationStatus({ ...props.data, status: 'APPROVED' }));
-    setIsApproveModalOpen(false);
+    dispatch(updateRegistrationStatus({ ...props.data, status: 'APPROVED' })).then(() => {
+      setIsApproveModalOpen(false);
+      toast.success('Registro aprovado com sucesso', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }).catch(() => {
+      toast.error('Erro ao aprovar registro', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    });
   };
 
   const handleConfirmReview = () => {
-    dispatch(updateRegistrationStatus({ ...props.data, status: 'REVIEW' }));
-    setIsReviewModalOpen(false);
+    dispatch(updateRegistrationStatus({ ...props.data, status: 'REVIEW' })).then(() => {
+      setIsReviewModalOpen(false);
+      toast.success('Registro enviado para revisão novamente', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }).catch(() => {
+      toast.error('Erro ao enviar registro para revisão novamente', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    });
   };
 
   const handleReprove = () => {
@@ -104,7 +165,6 @@ const RegistrationCard = (props: Props) => {
           <p>Tem certeza que deseja revisar novamente este registro?</p>
         </Modal>
       )}
-
     </S.Card>
   );
 };
