@@ -32,7 +32,6 @@ export const SearchBar = () => {
     setInputValue(maskedValue);
 
     const unmaskedValue = removeMask(maskedValue);
-    console.log('Input Changed:', unmaskedValue); // Log de depuração
 
     if (validateCPF(unmaskedValue)) {
       dispatch(setSearchTerm(unmaskedValue));
