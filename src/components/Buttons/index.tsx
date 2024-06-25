@@ -14,6 +14,12 @@ const Button = styled.button`
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   font-size: 16px;
   font-weight: 600;
+  
+  &:disabled {
+    background-color: #a5a5a5;
+    cursor: not-allowed;
+    color: #cccccc;
+  }
 `;
 
 export const ButtonSmall = styled.button<{
@@ -28,6 +34,12 @@ export const ButtonSmall = styled.button<{
   background-color: ${(props) => props.bgcolor ?? 'none'};
   color: ${(props) => props.color ?? "#000"};
   cursor: pointer;
+
+  &:disabled {
+    background-color: #a5a5a5;
+    cursor: not-allowed;
+    color: #cccccc;
+  }
 `;
 
 

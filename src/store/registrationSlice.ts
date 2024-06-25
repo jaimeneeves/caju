@@ -22,6 +22,22 @@ const initialState: RegistrationState = {
   error: null,
 };
 
+export const createUserRegistration = createAsyncThunk(
+  'registrations/createUserRegistration',
+  async (data: Omit<Registration, 'id'>, { rejectWithValue }) => {
+    try {
+      const response = await axios.post('/registrations', data);
+      return response.data as Registration;
+    } catch (error) {
+      if (isAxiosError(error) && error.response) {
+        return rejectWithValue(error.response.data);
+      } else {
+        return rejectWithValue('An unknown error occurred');
+      }
+    }
+  }
+);
+
 export const fetchRegistrations = createAsyncThunk(
   'registrations/fetchRegistrations',
   async (cpf?: string) => {
@@ -100,6 +116,17 @@ const registrationSlice = createSlice({
         state.registrations = state.registrations.filter(registration => registration.id !== action.payload);
       })
       .addCase(deleteRegistration.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      })
+      .addCase(createUserRegistration.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(createUserRegistration.fulfilled, (state, action: PayloadAction<Registration>) => {
+        state.status = 'idle';
+        state.registrations.push(action.payload);
+      })
+      .addCase(createUserRegistration.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
       });
