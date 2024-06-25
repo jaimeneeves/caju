@@ -27,34 +27,47 @@ type Props = {
   mask?: string;
   setValue?: (value: string) => void;
   value?: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 } & InputHTMLAttributes<any>;
 
 const InputMask = IMaskMixin(({ inputRef, ...props }: { inputRef: React.Ref<HTMLInputElement> }) => (
-  <Input
-    {...props}
-    ref={inputRef}
-  />
+  <Input {...props} ref={inputRef} />
 ));
 
 const TextField = (props: Props) => {
-  const { mask, onChange } = props;
+  const { onChange, setValue, value, error, label, ...restProps } = props;
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (onChange) {
+      onChange(e);
+    }
+    if (setValue) {
+      setValue(e.target.value);
+    }
+  };
+
+   // Desestruturar restProps para remover props específicas antes de passar para o Input
+   const { setValue: _setValue, error: _error, label: _label, mask: _mask, ...filteredProps } = restProps;
 
   return (
     <div>
-      <label htmlFor={props.id}>{props.label}</label>
-      {mask ? (
+      <label htmlFor={props.id}>{label}</label>
+      {props.mask ? (
         <InputMask
-          {...props}
+          {...restProps}
           onAccept={(value:any) => {
             if (onChange) {
               onChange({ target: { value } } as ChangeEvent<HTMLInputElement>);
             }
+            if (setValue) {
+              setValue(value);
+            }
           }}
         />
       ) : (
-        <Input {...props} />
+        <Input {...filteredProps} value={value} onChange={handleChange} />
       )}
-      <span style={{ fontSize: 12, color: 'red' }}>{props.error}</span>
+      <span style={{ fontSize: 12, color: 'red' }}>{error}</span>
     </div>
   );
 };
