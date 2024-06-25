@@ -1,5 +1,6 @@
-import React, { InputHTMLAttributes } from "react";
+import React, { InputHTMLAttributes, ChangeEvent } from "react";
 import styled from "styled-components";
+import { IMaskMixin } from "react-imask";
 
 export const Input = styled.input`
   padding: 0 8px;
@@ -23,14 +24,37 @@ export const Input = styled.input`
 type Props = {
   label?: string;
   error?: string;
+  mask?: string;
+  setValue?: (value: string) => void;
+  value?: string;
 } & InputHTMLAttributes<any>;
 
+const InputMask = IMaskMixin(({ inputRef, ...props }: { inputRef: React.Ref<HTMLInputElement> }) => (
+  <Input
+    {...props}
+    ref={inputRef}
+  />
+));
+
 const TextField = (props: Props) => {
+  const { mask, onChange } = props;
+
   return (
     <div>
       <label htmlFor={props.id}>{props.label}</label>
-      <Input {...props} />
-      <span style={{fontSize: 12, color: 'red'}}>{props.error}</span>
+      {mask ? (
+        <InputMask
+          {...props}
+          onAccept={(value:any) => {
+            if (onChange) {
+              onChange({ target: { value } } as ChangeEvent<HTMLInputElement>);
+            }
+          }}
+        />
+      ) : (
+        <Input {...props} />
+      )}
+      <span style={{ fontSize: 12, color: 'red' }}>{props.error}</span>
     </div>
   );
 };
