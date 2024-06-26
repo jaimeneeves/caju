@@ -27,11 +27,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Start JSON Server
-        run: |
-          nohup yarn init:db &
-          sleep 5
-
       - name: Build project
         run: yarn build
 
