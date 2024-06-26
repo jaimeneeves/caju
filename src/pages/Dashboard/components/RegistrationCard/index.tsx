@@ -26,75 +26,27 @@ const RegistrationCard = (props: Props) => {
   const handleConfirmReprove = () => {
     dispatch(updateRegistrationStatus({ ...props.data, status: 'REPROVED' })).then(() => {
       setIsReproveModalOpen(false);
-      toast.success('Registro reprovado com sucesso', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success('Registro reprovado com sucesso');
     }).catch(() => {
-      toast.error('Erro ao reprovar registro', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error('Erro ao reprovar registro');
     });
   };
 
   const handleConfirmApprove = () => {
     dispatch(updateRegistrationStatus({ ...props.data, status: 'APPROVED' })).then(() => {
       setIsApproveModalOpen(false);
-      toast.success('Registro aprovado com sucesso', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success('Registro aprovado com sucesso');
     }).catch(() => {
-      toast.error('Erro ao aprovar registro', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error('Erro ao aprovar registro');
     });
   };
 
   const handleConfirmReview = () => {
     dispatch(updateRegistrationStatus({ ...props.data, status: 'REVIEW' })).then(() => {
       setIsReviewModalOpen(false);
-      toast.success('Registro enviado para revisão novamente', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.success('Registro enviado para revisão novamente');
     }).catch(() => {
-      toast.error('Erro ao enviar registro para revisão novamente', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error('Erro ao enviar registro para revisão novamente');
     });
   };
 
@@ -129,9 +81,17 @@ const RegistrationCard = (props: Props) => {
         <span>{props.data.admissionDate}</span>
       </S.IconAndText>
       <S.Actions>
-        <ButtonSmall bgcolor="rgb(255, 145, 154)" onClick={handleReprove}>Reprovar</ButtonSmall>
-        <ButtonSmall bgcolor="rgb(155, 229, 155)" onClick={handleApprove}>Aprovar</ButtonSmall>
-        <ButtonSmall bgcolor="#ff8858" onClick={handleReview}>Revisar novamente</ButtonSmall>
+        {props.data.status === "REVIEW" && (
+          <S.ActionsContent>
+            <ButtonSmall bgcolor="rgb(255, 145, 154)" onClick={handleReprove}>Reprovar</ButtonSmall>
+            <ButtonSmall bgcolor="rgb(155, 229, 155)" onClick={handleApprove}>Aprovar</ButtonSmall>
+          </S.ActionsContent>
+        )}
+        {(props.data.status === "REPROVED" || props.data.status === "APPROVED") && (
+          <>
+            <ButtonSmall bgcolor="#ff8858" onClick={handleReview}>Revisar novamente</ButtonSmall>
+          </>
+        )}
 
         <HiOutlineTrash onClick={handleDelete} />
       </S.Actions>

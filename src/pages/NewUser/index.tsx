@@ -97,7 +97,6 @@ const NewUserPage = () => {
     dispatch(createUserRegistration(payload));
 
     // Sucesso
-    // Redirecionar ou limpar o formulário
     history.push(routes.dashboard);
   };
 
