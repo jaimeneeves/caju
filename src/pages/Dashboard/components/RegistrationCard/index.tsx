@@ -22,6 +22,7 @@ const RegistrationCard = (props: Props) => {
   const [isReproveModalOpen, setIsReproveModalOpen] = useState(false);
   const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const handleConfirmReprove = () => {
     dispatch(updateRegistrationStatus({ ...props.data, status: 'REPROVED' })).then(() => {
@@ -50,6 +51,15 @@ const RegistrationCard = (props: Props) => {
     });
   };
 
+  const handleConfirmDelete = () => {
+    dispatch(deleteRegistration(props.data.id)).then(() => {
+      setIsDeleteModalOpen(false);
+      toast.success('Registro excluído com sucesso');
+    }).catch(() => {
+      toast.error('Erro ao excluir registro');
+    });
+  };
+
   const handleReprove = () => {
     setIsReproveModalOpen(true);
   };
@@ -63,7 +73,8 @@ const RegistrationCard = (props: Props) => {
   };
 
   const handleDelete = () => {
-    dispatch(deleteRegistration(props.data.id));
+    // dispatch(deleteRegistration(props.data.id));
+    setIsDeleteModalOpen(true);
   };
 
   return (
@@ -121,6 +132,16 @@ const RegistrationCard = (props: Props) => {
           title="Confirmar revisão"
           onConfirm={handleConfirmReview}
           onClose={() => setIsReviewModalOpen(false)}
+        >
+          <p>Tem certeza que deseja revisar novamente este registro?</p>
+        </Modal>
+      )}
+
+      {isDeleteModalOpen && (
+        <Modal
+          title="Confirmar exclusão"
+          onConfirm={handleConfirmDelete}
+          onClose={() => setIsDeleteModalOpen(false)}
         >
           <p>Tem certeza que deseja revisar novamente este registro?</p>
         </Modal>
