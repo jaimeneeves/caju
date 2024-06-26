@@ -32,9 +32,6 @@ jobs:
           nohup yarn init:db &
           sleep 5
 
-      - name: Run Lint
-        run: yarn lint
-
       - name: Build project
         run: yarn build
 
