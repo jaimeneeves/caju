@@ -13,3 +13,9 @@ export const Actions = styled.div`
   align-items: center;
   gap: 16px;
 `;
+
+export const SearchContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1.25rem;
+`;

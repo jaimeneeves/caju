@@ -23,12 +23,13 @@ export const IconAndText = styled.div`
 `;
 
 export const Actions = styled.div`
-  margin-top: 8px;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 4px;
-
+  border-top: 1px solid #eee;
   svg {
     cursor: pointer;
   }
@@ -37,4 +38,13 @@ export const Actions = styled.div`
 export const ActionsContent = styled.div`
   display: flex;
   gap: 4px;
+`;
+
+export const ActionsDelete = styled.div`
+  padding: .25rem;
+  border-radius: 1rem;
+  border: 1px solid red;
+  color: red;
+  height: 1rem;
+  width: 1rem;
 `;

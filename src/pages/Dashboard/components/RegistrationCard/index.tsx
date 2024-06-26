@@ -73,7 +73,6 @@ const RegistrationCard = (props: Props) => {
   };
 
   const handleDelete = () => {
-    // dispatch(deleteRegistration(props.data.id));
     setIsDeleteModalOpen(true);
   };
 
@@ -91,6 +90,7 @@ const RegistrationCard = (props: Props) => {
         <HiOutlineCalendar />
         <span>{props.data.admissionDate}</span>
       </S.IconAndText>
+
       <S.Actions>
         {props.data.status === "REVIEW" && (
           <S.ActionsContent>
@@ -100,11 +100,12 @@ const RegistrationCard = (props: Props) => {
         )}
         {(props.data.status === "REPROVED" || props.data.status === "APPROVED") && (
           <>
-            <ButtonSmall bgcolor="#ff8858" onClick={handleReview}>Revisar novamente</ButtonSmall>
+            <ButtonSmall bgcolor="#ff8858" color="#ffffff" onClick={handleReview}>Revisar novamente</ButtonSmall>
           </>
         )}
-
-        <HiOutlineTrash onClick={handleDelete} />
+        <S.ActionsDelete>
+          <HiOutlineTrash onClick={handleDelete} />
+        </S.ActionsDelete>
       </S.Actions>
 
       {isReproveModalOpen && (
