@@ -144,7 +144,7 @@ const RegistrationCard = (props: Props) => {
           onConfirm={handleConfirmDelete}
           onClose={() => setIsDeleteModalOpen(false)}
         >
-          <p>Tem certeza que deseja revisar novamente este registro?</p>
+          <p>Tem certeza que deseja excluir este registro?</p>
         </Modal>
       )}
     </S.Card>
