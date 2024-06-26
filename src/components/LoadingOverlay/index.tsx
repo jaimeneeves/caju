@@ -33,7 +33,7 @@ const Spinner = styled.div`
 
 const LoadingOverlay = () => (
   <Overlay>
-    <Spinner />
+    <Spinner data-testid="overlay" />
   </Overlay>
 );
 

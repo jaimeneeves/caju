@@ -72,7 +72,7 @@ const Modal = ({ title, children, onConfirm, onClose }: ModalProps) => {
       <ModalContainer>
         <ModalHeader>
           <ModalTitle>{title}</ModalTitle>
-          <CloseButton onClick={onClose}><HiX /></CloseButton>
+          <CloseButton onClick={onClose} aria-label="close"><HiX /></CloseButton>
         </ModalHeader>
         <ModalBody>{children}</ModalBody>
         <ModalFooter>
