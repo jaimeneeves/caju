@@ -49,3 +49,7 @@ export function debounce(func:any, wait:any) {
     timeout = setTimeout(later, wait);
   };
 }
+
+export const removeMask = (value: string) => {
+  return value.replace(/\D/g, '');
+};

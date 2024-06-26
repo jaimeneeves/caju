@@ -8,9 +8,11 @@ import store from "./store";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+const root = ReactDOM.createRoot(document.getElementById('root')!)
+
+root.render(
   <Provider store={store}>
     <App />
     <ToastContainer />
-  </Provider>
-);
+  </Provider>,
+)
