@@ -9,8 +9,8 @@ import routes from "~/router/routes";
 import * as S from "./styles";
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchTerm } from '~/store/searchSlice';
-import { RootState } from '~/store';
-import { fetchRegistrations, AppDispatch } from '~/store/registrationSlice';
+import { RootState, AppDispatch } from '~/store';
+import { fetchRegistrations } from '~/store/registrationSlice';
 import { validateCPF } from '~/helpers';
 
 export const SearchBar = () => {

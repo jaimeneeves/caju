@@ -46,7 +46,7 @@ const TextField = (props: Props) => {
     }
   };
 
-   // Desestruturar restProps para remover props específicas antes de passar para o Input
+   // @ts-ignore
    const { setValue: _setValue, error: _error, label: _label, mask: _mask, ...filteredProps } = restProps;
 
   return (

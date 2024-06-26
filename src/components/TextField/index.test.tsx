@@ -1,11 +1,11 @@
-import React from 'react';
 import '@testing-library/jest-dom';
 import { render, fireEvent } from '@testing-library/react';
 import MeuComponente from './index';
 
 describe('Componente de TextField', () => {
   test('renderiza corretamente', () => {
-    const { getByLabelText, getByText } = render(
+    
+    const { getByLabelText } = render(
       <MeuComponente id="meu-input" label="Meu Label" value="" onChange={() => {}} setValue={() => {}} />
     );
 
