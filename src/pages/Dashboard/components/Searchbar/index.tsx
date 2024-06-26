@@ -11,32 +11,37 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSearchTerm } from '~/store/searchSlice';
 import { RootState, AppDispatch } from '~/store';
 import { fetchRegistrations } from '~/store/registrationSlice';
-import { validateCPF } from '~/helpers';
+import { validateCPF, removeMask } from '~/helpers';
 
 export const SearchBar = () => {
   const history = useHistory();
   const dispatch = useDispatch<AppDispatch>();
   const searchTerm = useSelector((state: RootState) => state.search.searchTerm);
   const [inputValue, setInputValue] = useState<string>(searchTerm);
+  const [cpfError, setCpfError] = useState("");
 
   const goToNewAdmissionPage = () => {
     history.push(routes.newUser);
-  };
-
-  const removeMask = (value: string) => {
-    return value.replace(/\D/g, '');
   };
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const maskedValue = event.target.value;
     setInputValue(maskedValue);
 
+    if (maskedValue === '') {
+      dispatch(setSearchTerm(''));
+      return;
+    }
+
     const unmaskedValue = removeMask(maskedValue);
 
-    if (validateCPF(unmaskedValue)) {
-      dispatch(setSearchTerm(unmaskedValue));
-    } else {
-      console.log('CPF inválido'); // Log de depuração      
+    if (unmaskedValue.length === 11) {
+      if (validateCPF(unmaskedValue)) {
+        dispatch(setSearchTerm(unmaskedValue));
+        setCpfError("");
+      } else {
+        setCpfError("CPF inválido");
+      }
     }
   };
 
@@ -54,6 +59,7 @@ export const SearchBar = () => {
         mask="000.000.000-00"
         placeholder="Digite um CPF válido"
         value={inputValue}
+        error={cpfError}
         onChange={handleInputChange}
       />
       <S.Actions>
