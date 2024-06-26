@@ -91,20 +91,20 @@ const RegistrationCard = (props: Props) => {
         <span>{props.data.admissionDate}</span>
       </S.IconAndText>
 
-      <S.Actions>
+      <S.Actions data-cy="registration-card">
         {props.data.status === "REVIEW" && (
           <S.ActionsContent>
-            <ButtonSmall bgcolor="rgb(255, 145, 154)" onClick={handleReprove}>Reprovar</ButtonSmall>
-            <ButtonSmall bgcolor="rgb(155, 229, 155)" onClick={handleApprove}>Aprovar</ButtonSmall>
+            <ButtonSmall bgcolor="rgb(255, 145, 154)" data-cy="reprove-button" onClick={handleReprove}>Reprovar</ButtonSmall>
+            <ButtonSmall bgcolor="rgb(155, 229, 155)" data-cy="approve-button" onClick={handleApprove}>Aprovar</ButtonSmall>
           </S.ActionsContent>
         )}
         {(props.data.status === "REPROVED" || props.data.status === "APPROVED") && (
           <>
-            <ButtonSmall bgcolor="#ff8858" color="#ffffff" onClick={handleReview}>Revisar novamente</ButtonSmall>
+            <ButtonSmall bgcolor="#ff8858" color="#ffffff" data-cy="review-button" onClick={handleReview}>Revisar novamente</ButtonSmall>
           </>
         )}
         <S.ActionsDelete>
-          <HiOutlineTrash onClick={handleDelete} />
+          <HiOutlineTrash data-cy="delete-icon" onClick={handleDelete} />
         </S.ActionsDelete>
       </S.Actions>
 

@@ -77,7 +77,7 @@ const Modal = ({ title, children, onConfirm, onClose }: ModalProps) => {
         <ModalBody>{children}</ModalBody>
         <ModalFooter>
           <ButtonSmall bgcolor="#f44336" color="#fff" onClick={onClose}>Cancel</ButtonSmall>
-          <ButtonSmall bgcolor="#64a98c" color="#fff" onClick={onConfirm}>Confirm</ButtonSmall>
+          <ButtonSmall bgcolor="#64a98c" color="#fff" data-cy="modal-confirm" onClick={onConfirm}>Confirmar</ButtonSmall>
         </ModalFooter>
       </ModalContainer>
     </ModalOverlay>

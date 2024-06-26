@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '~/store';
 import TextField from "~/components/TextField";
@@ -23,13 +23,6 @@ const NewUserPage = () => {
   const [cpfError, setCpfError] = useState("");
   const [admissionDate, setAdmissionDate] = useState("");
   const [formError, setFormError] = useState("");
-  const [isFormValid, setIsFormValid] = useState(false);
-
-  useEffect(() => {
-    // Verifica se todos os campos são válidos
-    const isValid = !emailError && !fullNameError && !cpfError && email && fullName && cpf && admissionDate;
-    setIsFormValid(Boolean(isValid));
-  }, [email, emailError, fullName, fullNameError, cpf, cpfError, admissionDate]);
 
   const goToHome = () => {
     history.push(routes.dashboard);
@@ -138,7 +131,7 @@ const NewUserPage = () => {
         {formError && <span style={{ fontSize: 12, color: 'red' }}>{formError}</span>}
         {status === 'loading' && <span>Enviando...</span>}
         {error && <span style={{ fontSize: 12, color: 'red' }}>{error}</span>}
-        <Button onClick={handleSubmit} disabled={!isFormValid}>Cadastrar</Button>
+        <Button id='submit' onClick={handleSubmit}>Cadastrar</Button>
       </S.Card>
     </S.Container>
   );
