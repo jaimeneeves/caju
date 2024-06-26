@@ -55,13 +55,15 @@ export const SearchBar = () => {
   
   return (
     <S.Container>
-      <TextField
-        mask="000.000.000-00"
-        placeholder="Digite um CPF válido"
-        value={inputValue}
-        error={cpfError}
-        onChange={handleInputChange}
-      />
+      <S.SearchContent>
+        <TextField
+          mask="000.000.000-00"
+          placeholder="Digite um CPF válido"
+          value={inputValue}
+          error={cpfError}
+          onChange={handleInputChange}
+        />
+      </S.SearchContent>
       <S.Actions>
         <IconButton aria-label="refetch" onClick={handleRefreshClick}>
           <HiRefresh />

@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <Header>
-        <h1>Caju Front Teste</h1>
+        <h1>Caju Board</h1>
       </Header>
       <Router />
     </>
