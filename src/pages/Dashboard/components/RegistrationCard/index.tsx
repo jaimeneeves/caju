@@ -99,9 +99,9 @@ const RegistrationCard = (props: Props) => {
           </S.ActionsContent>
         )}
         {(props.data.status === "REPROVED" || props.data.status === "APPROVED") && (
-          <>
+          <div data-cy="registration-review-card">
             <ButtonSmall bgcolor="#ff8858" color="#ffffff" data-cy="review-button" onClick={handleReview}>Revisar novamente</ButtonSmall>
-          </>
+          </div>
         )}
         <S.ActionsDelete>
           <HiOutlineTrash data-cy="delete-icon" onClick={handleDelete} />
