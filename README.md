@@ -43,7 +43,7 @@ cd caju
 yarn install
 ```
 
-Crie uma cópia do arquivo `.env.example` e e renomeie para `.env`
+4. Crie uma cópia do arquivo `.env.example` e e renomeie para `.env`
 
 ```sh
 cp .env.example .env
@@ -55,7 +55,7 @@ O conteúdo do arquivo `.env` deve ficar assim:
 VITE_APP_API_URL="http://localhost:3000"
 ```
 
-4. Inicie o JSON Server para simular uma API REST:
+5. Inicie o JSON Server para simular uma API REST:
 
 ```sh
 yarn init:db
@@ -63,7 +63,7 @@ yarn init:db
 
 Certifique-se de que o JSON Server está rodando corretamente e acessível na URL configurada no arquivo `.env`.
 
-5. Execute o projeto em modo de desenvolvimento:
+6. Execute o projeto em modo de desenvolvimento:
 
 ```sh
 yarn dev
@@ -98,42 +98,14 @@ yarn cypress open
 
 No painel do Cypress, selecione o teste que deseja executar. A execução interativa é ideal durante o desenvolvimento e a depuração dos testes E2E.  
 
-## Scripts disponíveis
+## 📜 Scripts Disponíveis
 
-Modo Dev
+- Modo Dev: `yarn dev`
+- Linter: `yarn lint`
+- Build: `yarn build` 
+- Testes Unitários: `yarn test:dev`
+- Testes E2E: `yarn cypress:run`
+- Iniciar JSON Server: `yarn init:db`
 
-```shell
-yarn dev
-```
-
-Linter
-
-```shell
-yarn lint
-```
-
-Build
-
-```shell
-yarn build
-```
-
-Testes Unitários
-
-```sh
-yarn test:dev
-```
-
-Testes E2E
-
-```sh
-yarn cypress:run
-```
-
-Iniciar JSON Server
-
-```shell
-yarn init:db
-```
 
 ---
